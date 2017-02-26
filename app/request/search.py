@@ -36,17 +36,17 @@ class UserSearch(AbstractRequest):
 		return params
 
 	def fields(self):
-		names = self.state["tmp"]["analysis"]["names"]
+		keys = self.state["tmp"]["analysis"]["keys"]
 		fields = []
 
-		if "relation" in names:
+		if "relation" in keys:
 			fields.append("relation")
 
-		if "followers" in names:
+		if "followers" in keys:
 			fields.append("followers_count")
 
 		for personal in "political", "people", "life", "smoking", "alcohol":
-			if personal in names:
+			if personal in keys:
 				fields.append("personal")
 				break
 

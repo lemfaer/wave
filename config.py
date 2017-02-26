@@ -6,6 +6,7 @@ from app.request.search import UserSearch
 from app.request.country import CountryGet
 
 from app.handler.city import city
+from app.handler.range import range
 from app.handler.search import search
 from app.handler.country import country
 
@@ -29,7 +30,7 @@ app = {
 	"handlers" : {
 		CountryGet : [ country ],
 		CityGet : [ city ],
-		UserSearch : [ search ],
+		UserSearch : [ search, range ],
 		UserGet : []
 	},
 
@@ -45,7 +46,7 @@ default = {
 	"q" : "",
 	"country" : None,
 	"city" : None,
-	"sort" : [ [ "by mark", "asc" ], [ "by rating", "asc" ] ],
+	"sort" : [ [ "by rank", "asc" ], [ "by rating", "asc" ] ],
 	"sex" : "any",
 	"age" : None,
 	"min" : 0

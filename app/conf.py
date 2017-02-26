@@ -28,11 +28,11 @@ def unval(conf):
 		if k in val:
 			conf["setup"][k] = _rec_unval(v, val[k])
 
-	# mark val replace
-	if "mark" in conf:
-		for item in conf["mark"]:
-			if item["name"] in val:
-				item["value"] = _rec_unval(item["value"], val[item["name"]])
+	# rank val replace
+	if "rank" in conf:
+		for item in conf["rank"]:
+			if item["key"] in val:
+				item["val"] = _rec_unval(item["val"], val[item["key"]])
 
 	return conf
 
@@ -58,12 +58,12 @@ def default(conf):
 	for k, v in default.items():
 		conf["setup"].setdefault(k, v)
 
-	# default mark list
-	if "mark" in conf:
-		for rule in conf["mark"]:
-			if (not isinstance(rule["value"], dict)
-					and not isinstance(rule["value"], list)):
-				rule["value"] = [ rule["value"] ]
+	# default rank list
+	if "rank" in conf:
+		for rule in conf["rank"]:
+			if (not isinstance(rule["val"], dict)
+					and not isinstance(rule["val"], list)):
+				rule["val"] = [ rule["val"] ]
 
 	return conf
 
@@ -71,23 +71,23 @@ def analyze(conf):
 	al = {
 		"exact" : set(),
 		"range" : set(),
-		"names" : {}
+		"keys" : {}
 	}
 
-	if "mark" in conf:
-		for i, rule in enumerate(conf["mark"]):
-			name = rule["name"]
-			value = rule["value"]
+	if "rank" in conf:
+		for i, rule in enumerate(conf["rank"]):
+			key = rule["key"]
+			val = rule["val"]
 
-			# names
-			al["names"].setdefault(name, set())
-			al["names"][name].add(i)
+			# keys
+			al["keys"].setdefault(key, set())
+			al["keys"][key].add(i)
 
-			# values
-			if isinstance(value, list):
+			# vals
+			if isinstance(val, list):
 				al["exact"].add(i)
 
-			if isinstance(value, dict):
+			if isinstance(val, dict):
 				al["range"].add(i)
 
 	conf["tmp"]["analysis"] = al
