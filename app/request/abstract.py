@@ -1,5 +1,5 @@
-import requests
-import urllib.parse
+import requests, json, urllib.parse
+from app.conf import update
 
 class AbstractRequest:
 
@@ -9,20 +9,34 @@ class AbstractRequest:
 	def url(self):
 		url = "{root}{method}?{params}"
 
-		root = self.state["root"]
-		method = self.state["method"][type(self)]
+		root = self.state["app"]["root"]
+		method = self.state["app"]["method"][type(self)]
 		params = urllib.parse.urlencode(self.params())
 
 		return url.format(root=root, method=method, params=params)
 
 	def params(self):
-		raise NotImplementedError()
+		return {
+			"access_token" : self.state["access"],
+			"v" : 5.8
+		}
 
 	def send(self):
-		return self.apply(requests.get(self.url()))
+		url = self.url()
+		res = requests.get(url)
 
-	def apply(self, responce):
-		for handler in self.state["handlers"][type(self)]:
-			responce = handler(responce)
+		self.log(res)
+		self.apply(res)
 
-		return self.state.update(responce) or self.state
+		return self.state
+
+	def log(self, res):
+		self.state["tmp"].setdefault("log", [])
+		self.state["tmp"]["log"].append(res.text);
+
+	def apply(self, res):
+		self.state["tmp"]["response"] = json.loads(res.text)["response"]
+
+		# update state
+		for handler in self.state["app"]["handlers"][type(self)]:
+			handler(self.state)

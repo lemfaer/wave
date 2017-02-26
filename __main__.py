@@ -1,13 +1,13 @@
-# config
 import config
 import setup
 from app.conf import stan
-
-# request
-from app.request import *
-
+from app.request.next import next
+from pprint import pprint
 
 # action
 state = stan(config, setup)
-country = country.CountryGet(state)
-print(country.url())
+
+for req in next(state):
+	req.send()
+
+pprint(state)

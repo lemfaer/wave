@@ -1,24 +1,44 @@
+import os
+
 from app.request.get import UserGet
 from app.request.city import CityGet
 from app.request.search import UserSearch
 from app.request.country import CountryGet
 
-root = "https://api.vk.com/method/"
+from app.handler.city import city
+from app.handler.search import search
+from app.handler.country import country
 
-order = [ CountryGet, CityGet, UserSearch, UserGet ]
+app = {
+	"root" : "https://api.vk.com/method/",
 
-method = {
-	CountryGet : "database.getCountries",
-	CityGet : "database.getCities",
-	UserSearch : "users.get",
-	UserGet : "users.search"
-}
+	"dir" : os.path.dirname(os.path.abspath(__file__)),
 
-handlers = {
-	CountryGet : [],
-	CityGet : [],
-	UserSearch : [],
-	UserGet : []
+	"order" : [ CountryGet, CityGet, UserSearch ],
+	# "order" : [ CountryGet, CityGet, UserSearch, UserGet ],
+
+	"current" : -1,
+
+	"method" : {
+		CountryGet : "database.getCountries",
+		CityGet : "database.getCities",
+		UserSearch : "users.search",
+		UserGet : "users.get"
+	},
+
+	"handlers" : {
+		CountryGet : [ country ],
+		CityGet : [ city ],
+		UserSearch : [ search ],
+		UserGet : []
+	},
+
+	"js" : {
+		"get" : os.path.join(
+			os.path.dirname(os.path.abspath(__file__)),
+			"js/get.js"
+		)
+	}
 }
 
 default = {
@@ -61,7 +81,7 @@ val = {
 		"libertian" : 9
 	},
 
-	"people_main" : {
+	"people" : {
 		"intellect and creativity" : 1,
 		"kindness and honesty" : 2,
 		"health and beauty" : 3,
@@ -70,7 +90,7 @@ val = {
 		"humor and love for life" : 6
 	},
 
-	"life_main" : {
+	"life" : {
 		"family and children" : 1,
 		"career and money" : 2,
 		"entertainment and leisure" : 3,
@@ -344,3 +364,5 @@ val = {
 		"Wallis and Futuna" : "WF"
 	}
 }
+
+tmp = {}
