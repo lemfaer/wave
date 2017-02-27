@@ -6,7 +6,10 @@ from app.request.search import UserSearch
 from app.request.country import CountryGet
 
 from app.handler.city import city
+from app.handler.clean import clean
 from app.handler.range import range
+from app.handler.exact import exact
+from app.handler.filter import filter
 from app.handler.search import search
 from app.handler.country import country
 
@@ -30,7 +33,7 @@ app = {
 	"handlers" : {
 		CountryGet : [ country ],
 		CityGet : [ city ],
-		UserSearch : [ search, range ],
+		UserSearch : [ search, range, exact, filter, clean ],
 		UserGet : []
 	},
 

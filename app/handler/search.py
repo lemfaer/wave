@@ -11,6 +11,11 @@ def search(state):
 		item["relation"] = item.pop("relation", None)
 		item["followers"] = item.pop("followers_count", None)
 
+		item.setdefault("last_seen", {})
+		item["time"] = item["last_seen"].pop("time", None)
+		item["platfrorm"] = item["last_seen"].pop("platfrorm", None)
+		item.pop("last_seen")
+
 		item.setdefault("personal", {})
 		item["life"] = item["personal"].pop("life_main", None)
 		item["people"] = item["personal"].pop("people_main", None)

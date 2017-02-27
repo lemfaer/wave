@@ -10,4 +10,5 @@ state = stan(config, setup)
 for req in next(state):
 	req.send()
 
-pprint(state)
+print(len(state["tmp"]["items"]))
+pprint(state["tmp"]["items"])

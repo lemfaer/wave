@@ -45,6 +45,9 @@ class UserSearch(AbstractRequest):
 		if "followers" in keys:
 			fields.append("followers_count")
 
+		if "time" in keys or "platform" in keys:
+			fields.append("last_seen")
+
 		for personal in "political", "people", "life", "smoking", "alcohol":
 			if personal in keys:
 				fields.append("personal")

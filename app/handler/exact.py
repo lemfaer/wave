@@ -1,24 +1,24 @@
 import collections
 
-def range(state):
-	ran = state["tmp"]["analysis"]["range"]
+def exact(state):
+	exa = state["tmp"]["analysis"]["exact"]
 
-	rang = {
-		key : [ state["rank"][i] for i in val & ran ]
+	exac = {
+		key : [ state["rank"][i] for i in val & exa ]
 		for key, val in state["tmp"]["analysis"]["keys"].items()
-		if val & ran
+		if val & exa
 	}
 
 	for item in state["tmp"]["items"]:
 		item.setdefault("rank", 0)
 
 		item_keys = set(item.keys())
-		rang_keys = set(rang.keys())
-		keys = item_keys & rang_keys
+		exac_keys = set(exac.keys())
+		keys = item_keys & exac_keys
 
 		for key in keys:
 			val = item[key]
-			ruls = rang[key]
+			ruls = exac[key]
 
 			for rule in ruls:
 				item["rank"] += _rank(val, rule)
@@ -33,13 +33,4 @@ def _rank(val, rule):
 	if isinstance(val, collections.Iterable):
 		return sum([ _rank(val, rule) for val in val ])
 
-	if "from" in rule["val"] and "to" in rule["val"]:
-		return rule["rank"] if rule["val"]["from"] < val < rule["val"]["to"] else 0
-
-	if "from" in rule["val"]:
-		return rule["rank"] if rule["val"]["from"] < val else 0
-
-	if "to" in rule["val"]:
-		return rule["rank"] if val < rule["val"]["to"] else 0
-
-	return 0
+	return rule["rank"] if val in rule["val"] else 0
