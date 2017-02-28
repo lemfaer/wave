@@ -1,13 +1,12 @@
 from app.request.next import repeat
 
 def search(state):
-	if state["tmp"]["month"] < 12:
-		state["tmp"]["items"] = []
-		repeat(state)
-	else:
-		state["tmp"]["items"] = state["tmp"]["_items"]
+	state["tmp"].setdefault("items", [])
 
-	for item in state["tmp"]["response"]["items"]:
+	for response in state["tmp"]["response"]:
+		state["tmp"]["items"].extend(response["items"])
+
+	for item in state["tmp"]["items"]:
 		item["relation"] = item.pop("relation", None)
 		item["followers"] = item.pop("followers_count", None)
 
@@ -23,6 +22,3 @@ def search(state):
 		item["alcohol"] = item["personal"].pop("alcohol", None)
 		item["political"] = item["personal"].pop("political", None)
 		item.pop("personal")
-
-	state["tmp"].setdefault("_items", [])
-	state["tmp"]["_items"].extend(state["tmp"]["response"]["items"])

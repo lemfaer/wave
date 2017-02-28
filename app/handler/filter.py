@@ -1,4 +1,6 @@
 _filter = filter
 
 def filter(state):
-	state["tmp"]["items"] = _filter(lambda item: item["rank"] > 0, state["tmp"]["items"])
+	filt = lambda item: item["rank"] > 0
+	item = _filter(filt, state["tmp"]["items"])
+	state["tmp"]["items"] = list(item)

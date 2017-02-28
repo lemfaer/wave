@@ -1,20 +1,15 @@
-import json
-from .abstract import AbstractRequest
+from .multi import MultiRequest
 
-class UserSearch(AbstractRequest):
+class UserSearch(MultiRequest):
 
 	def params(self):
-		tmp = self.state["tmp"]
-		tmp.setdefault("month", 0)
-		tmp["month"] += 1
-
-		return {
-			**super().params(),
+		return [{
+			**super(UserSearch, self).params(),
 			**self.setup(),
 			**self.fields(),
-			"birth_month" : tmp["month"],
+			"birth_month" : month,
 			"count" : 1000
-		}
+		} for month in range(1, 12 + 1)]
 
 	def setup(self):
 		setup = self.state["setup"]

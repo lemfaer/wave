@@ -1,19 +1,22 @@
-import requests, json, urllib.parse
-from app.conf import update
+import requests, json
 
 class AbstractRequest:
 
 	def __init__(self, state):
 		self.state = state
 
-	def url(self):
-		url = "{root}{method}?{params}"
-
+	def send(self):
 		root = self.state["app"]["root"]
 		method = self.state["app"]["method"][type(self)]
-		params = urllib.parse.urlencode(self.params())
+		url = root + method
 
-		return url.format(root=root, method=method, params=params)
+		res = requests.post(url, params = self.params())
+		res = res.text
+
+		self.log(res)
+		self.apply(res)
+
+		return self.state
 
 	def params(self):
 		return {
@@ -21,21 +24,12 @@ class AbstractRequest:
 			"v" : 5.8
 		}
 
-	def send(self):
-		url = self.url()
-		res = requests.get(url)
-
-		self.log(res)
-		self.apply(res)
-
-		return self.state
-
 	def log(self, res):
 		self.state["tmp"].setdefault("log", [])
-		self.state["tmp"]["log"].append(res.text);
+		self.state["tmp"]["log"].append(res);
 
 	def apply(self, res):
-		self.state["tmp"]["response"] = json.loads(res.text)["response"]
+		self.state["tmp"]["response"] = json.loads(res)["response"]
 
 		# update state
 		for handler in self.state["app"]["handlers"][type(self)]:

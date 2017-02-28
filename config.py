@@ -18,16 +18,19 @@ app = {
 
 	"dir" : os.path.dirname(os.path.abspath(__file__)),
 
-	"order" : [ CountryGet, CityGet, UserSearch ],
-	# "order" : [ CountryGet, CityGet, UserSearch, UserGet ],
+	"order" : [ CountryGet, CityGet, UserSearch, UserGet ],
 
 	"current" : -1,
+
+	"async" : 5,
+
+	"execute" : 25,
 
 	"method" : {
 		CountryGet : "database.getCountries",
 		CityGet : "database.getCities",
 		UserSearch : "users.search",
-		UserGet : "users.get"
+		UserGet : "execute"
 	},
 
 	"handlers" : {
