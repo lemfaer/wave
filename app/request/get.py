@@ -7,6 +7,13 @@ class UserGet(MultiRequest):
 	def __init__(self, state):
 		super(UserGet, self).__init__(state, async = False)
 
+	def need(self):
+		return bool(
+			"items" in self.state["tmp"]
+			and self.state["tmp"]["items"]
+			and self.fields()
+		)
+
 	def params(self):
 		return self.execute([ item["id"] for item in self.state["tmp"]["items"] ], {
 			**super(UserGet, self).params(),

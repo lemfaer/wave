@@ -2,6 +2,9 @@ from .multi import MultiRequest
 
 class UserSearch(MultiRequest):
 
+	def need(self):
+		return bool(self.setup() and self.fields())
+
 	def params(self):
 		return [{
 			**super(UserSearch, self).params(),
@@ -48,4 +51,4 @@ class UserSearch(MultiRequest):
 				fields.append("personal")
 				break
 
-		return { "fields" : ",".join(fields) }
+		return { "fields" : ",".join(fields) } if fields else {}

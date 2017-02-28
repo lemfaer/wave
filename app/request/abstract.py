@@ -5,6 +5,9 @@ class AbstractRequest:
 	def __init__(self, state):
 		self.state = state
 
+	def need(self):
+		return False
+
 	def send(self):
 		root = self.state["app"]["root"]
 		method = self.state["app"]["method"][type(self)]

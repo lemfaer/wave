@@ -5,8 +5,10 @@ from app.request.city import CityGet
 from app.request.search import UserSearch
 from app.request.country import CountryGet
 
+from app.handler.get import get
 from app.handler.city import city
 from app.handler.clean import clean
+from app.handler.merge import merge
 from app.handler.range import range
 from app.handler.exact import exact
 from app.handler.filter import filter
@@ -36,8 +38,8 @@ app = {
 	"handlers" : {
 		CountryGet : [ country ],
 		CityGet : [ city ],
-		UserSearch : [ search, range, exact, filter, clean ],
-		UserGet : []
+		UserSearch : [ search, range, exact, merge, filter, clean ],
+		UserGet : [ get, range, exact, merge, filter, clean ]
 	},
 
 	"js" : {
@@ -122,6 +124,16 @@ val = {
 		"neutral" : 3,
 		"compromisable" : 4,
 		"positive" : 5
+	},
+
+	"platform" : {
+		"mobile" : 1,
+		"iPhone app" : 2,
+		"iPad app" : 3,
+		"Android app" : 4,
+		"Windows Phone app" : 5,
+		"Windows app" : 6,
+		"web" : 7
 	},
 
 	"country" : {

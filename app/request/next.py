@@ -17,7 +17,8 @@ def next(state):
 			else:
 				obj = objs[mp.index(True)]
 
-			yield obj
+			if obj.need():
+				yield obj
 		else:
 			break
 
