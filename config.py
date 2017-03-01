@@ -14,6 +14,7 @@ from app.handler.clean import clean
 from app.handler.merge import merge
 from app.handler.range import range
 from app.handler.exact import exact
+from app.handler.count import count
 from app.handler.filter import filter
 from app.handler.search import search
 from app.handler.country import country
@@ -44,7 +45,7 @@ app = {
 		CityGet : [ city ],
 		UserSearch : [ search, range, exact, merge, filter, clean, sort ],
 		UserGet : [ get, range, exact, merge, filter, clean, sort ],
-		GroupGet : [ group, range, exact, merge, filter, clean, sort ]
+		GroupGet : [ group, range, exact, merge, filter, count, clean, sort ]
 	},
 
 	"js" : {

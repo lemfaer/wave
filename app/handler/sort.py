@@ -2,9 +2,6 @@ def sort(state):
 	if not state["setup"]["sort"]:
 		return
 
-	if "items" not in state["tmp"] or not state["tmp"]["items"]:
-		return
-
 	if state["setup"]["sort"] == "rank":
 		state["tmp"]["items"] = sorted(
 			state["tmp"]["items"],

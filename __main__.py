@@ -16,3 +16,4 @@ for req in next(state):
 
 print(len(state["tmp"]["items"]))
 pprint(state["tmp"]["items"])
+pprint(state["tmp"]["analysis"]["count"]["groups"])
