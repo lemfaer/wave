@@ -45,4 +45,5 @@ class MultiRequest(AbstractRequest):
 			json.loads(res.text)["response"]
 			for ress in resss
 			for res in ress
+			if "response" in json.loads(res.text)
 		]})

@@ -3,7 +3,7 @@ def get(state):
 	state["tmp"]["items"] = []
 
 	for response in state["tmp"]["response"]:
-		state["tmp"]["items"].extend([ item.pop() for item in response ])
+		state["tmp"]["items"].extend(response["items"])
 
 	for item in state["tmp"]["items"]:
 		item.setdefault("counters", {})

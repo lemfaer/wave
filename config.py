@@ -2,11 +2,13 @@ import os
 
 from app.request.get import UserGet
 from app.request.city import CityGet
+from app.request.group import GroupGet
 from app.request.search import UserSearch
 from app.request.country import CountryGet
 
 from app.handler.get import get
 from app.handler.city import city
+from app.handler.group import group
 from app.handler.clean import clean
 from app.handler.merge import merge
 from app.handler.range import range
@@ -20,7 +22,7 @@ app = {
 
 	"dir" : os.path.dirname(os.path.abspath(__file__)),
 
-	"order" : [ CountryGet, CityGet, UserSearch, UserGet ],
+	"order" : [ CountryGet, CityGet, UserSearch, UserGet, GroupGet ],
 
 	"current" : -1,
 
@@ -32,20 +34,27 @@ app = {
 		CountryGet : "database.getCountries",
 		CityGet : "database.getCities",
 		UserSearch : "users.search",
-		UserGet : "execute"
+		UserGet : "execute",
+		GroupGet : "execute"
 	},
 
 	"handlers" : {
 		CountryGet : [ country ],
 		CityGet : [ city ],
 		UserSearch : [ search, range, exact, merge, filter, clean ],
-		UserGet : [ get, range, exact, merge, filter, clean ]
+		UserGet : [ get, range, exact, merge, filter, clean ],
+		GroupGet : [ group, range, exact, merge, filter, clean ]
 	},
 
 	"js" : {
 		"get" : os.path.join(
 			os.path.dirname(os.path.abspath(__file__)),
 			"js/get.js"
+		),
+
+		"group" : os.path.join(
+			os.path.dirname(os.path.abspath(__file__)),
+			"js/group.js"
 		)
 	}
 }

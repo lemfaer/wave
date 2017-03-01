@@ -8,9 +8,10 @@ var params = {python_params},
 while (index > 0) {{
 	index = index - 1;
 	user = users[index];
-	params.user_ids = user;
-	item = API.users.get(params);
-	res.push(item.pop());
+	params.user_id = user;
+	item = API.groups.get(params);
+	item.id = user;
+	res.push(item);
 }}
 
 return {{ items : res }};
