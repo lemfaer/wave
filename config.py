@@ -7,6 +7,7 @@ from app.request.search import UserSearch
 from app.request.country import CountryGet
 
 from app.handler.get import get
+from app.handler.sort import sort
 from app.handler.city import city
 from app.handler.group import group
 from app.handler.clean import clean
@@ -41,9 +42,9 @@ app = {
 	"handlers" : {
 		CountryGet : [ country ],
 		CityGet : [ city ],
-		UserSearch : [ search, range, exact, merge, filter, clean ],
-		UserGet : [ get, range, exact, merge, filter, clean ],
-		GroupGet : [ group, range, exact, merge, filter, clean ]
+		UserSearch : [ search, range, exact, merge, filter, clean, sort ],
+		UserGet : [ get, range, exact, merge, filter, clean, sort ],
+		GroupGet : [ group, range, exact, merge, filter, clean, sort ]
 	},
 
 	"js" : {
@@ -63,7 +64,7 @@ default = {
 	"q" : "",
 	"country" : None,
 	"city" : None,
-	"sort" : [ [ "by rank", "asc" ], [ "by rating", "asc" ] ],
+	"sort" : "rank",
 	"sex" : "any",
 	"age" : None,
 	"min" : 0
